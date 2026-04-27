@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { sql } from "@/lib/db";
 import { getCurrentCustomer } from "@/lib/customer-auth";
+import { getPaymentProvider } from "@/lib/payments";
 
 const itemSchema = z.object({
   productId: z.string().min(1),
@@ -74,6 +75,26 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
         insert into order_items (order_id, product_id, sku, name, unit_price_tsh, quantity, line_total_tsh)
         values (${orderId}, ${it.productId}, ${it.sku}, ${it.name}, ${it.unitPriceTsh}, ${it.quantity}, ${it.unitPriceTsh * it.quantity})
       `;
+    }
+
+    // Kick off the payment if M-Pesa was selected. Mock provider returns
+    // immediately and flips status in the background; the real Vodacom
+    // provider does it inside this same call. We don't await failure here —
+    // the order itself is already saved, the customer hits the confirmation
+    // page and polls for status updates.
+    if (v.paymentMethod === "mpesa") {
+      const provider = getPaymentProvider();
+      provider
+        .initiate({
+          orderId,
+          orderCode,
+          amountTsh: total,
+          customerPhone: v.customerPhone,
+          customerName: v.customerName,
+        })
+        .catch((err) => {
+          console.error("[payments] initiate failed", err);
+        });
     }
 
     return { ok: true, orderCode };

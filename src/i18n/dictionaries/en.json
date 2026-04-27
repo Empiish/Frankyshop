@@ -173,7 +173,13 @@
     "order_code": "Order code",
     "whatsapp_cta": "Confirm on WhatsApp",
     "whatsapp_msg": "Hi Franky! I just placed order {code} ({name}, total {total}). Ready to confirm payment and delivery.",
-    "continue_shopping": "Continue shopping"
+    "continue_shopping": "Continue shopping",
+    "awaiting_title": "Awaiting payment",
+    "awaiting_subtitle": "Check your phone — we've sent an M-Pesa prompt. This page updates automatically.",
+    "paid_title": "Payment received.",
+    "paid_subtitle": "We'll start preparing your order. Expect a WhatsApp from us shortly.",
+    "failed_title": "Payment didn't go through.",
+    "failed_subtitle": "Please WhatsApp us using the button below — we'll sort it out together."
   },
   "contact": {
     "eyebrow": "Contact",

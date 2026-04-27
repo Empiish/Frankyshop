@@ -173,7 +173,13 @@
     "order_code": "ऑर्डर कोड",
     "whatsapp_cta": "WhatsApp पर पुष्टि करें",
     "whatsapp_msg": "नमस्ते Franky! मैंने ऑर्डर {code} ({name}, कुल {total}) अभी दिया है। भुगतान और डिलीवरी पुष्टि के लिए तैयार हूँ।",
-    "continue_shopping": "खरीदारी जारी रखें"
+    "continue_shopping": "खरीदारी जारी रखें",
+    "awaiting_title": "भुगतान का इंतज़ार",
+    "awaiting_subtitle": "अपना फ़ोन देखें — हमने M-Pesa प्रॉम्प्ट भेजा है। यह पेज अपने आप अपडेट होगा।",
+    "paid_title": "भुगतान मिल गया।",
+    "paid_subtitle": "हम आपका ऑर्डर तैयार करना शुरू कर रहे हैं। जल्द ही WhatsApp पर संदेश आएगा।",
+    "failed_title": "भुगतान पूरा नहीं हुआ।",
+    "failed_subtitle": "कृपया WhatsApp करें — हम मिलकर सुलझा देंगे।"
   },
   "contact": {
     "eyebrow": "संपर्क",

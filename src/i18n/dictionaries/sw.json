@@ -173,7 +173,13 @@
     "order_code": "Nambari ya oda",
     "whatsapp_cta": "Thibitisha kwenye WhatsApp",
     "whatsapp_msg": "Habari Franky! Nimeweka oda {code} ({name}, jumla {total}). Niko tayari kuthibitisha malipo na usafirishaji.",
-    "continue_shopping": "Endelea kununua"
+    "continue_shopping": "Endelea kununua",
+    "awaiting_title": "Inasubiri malipo",
+    "awaiting_subtitle": "Angalia simu yako — tumetuma ombi la M-Pesa. Ukurasa huu utajisasisha wenyewe.",
+    "paid_title": "Malipo yamepokelewa.",
+    "paid_subtitle": "Tutaanza kuandaa oda yako. Tarajia ujumbe wa WhatsApp hivi karibuni.",
+    "failed_title": "Malipo hayajakamilika.",
+    "failed_subtitle": "Tafadhali tutumie WhatsApp — tutalitatua pamoja."
   },
   "contact": {
     "eyebrow": "Wasiliana",

@@ -5,6 +5,7 @@ import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { sql } from "@/lib/db";
 import { formatTSh } from "@/lib/utils";
+import { PaymentStatusBanner } from "@/components/PaymentStatusBanner";
 
 type OrderRow = {
   id: string;
@@ -59,7 +60,22 @@ export default async function ConfirmationPage({
         {dict.confirmation.subtitle.replace("{code}", order.public_code)}
       </p>
 
-      <div className="mt-10 rounded-2xl border border-border bg-surface-muted p-7 text-left">
+      <div className="mt-10 text-left">
+        <PaymentStatusBanner
+          orderCode={order.public_code}
+          initialStatus={order.status as never}
+          strings={{
+            awaiting_title: dict.confirmation.awaiting_title,
+            awaiting_subtitle: dict.confirmation.awaiting_subtitle,
+            paid_title: dict.confirmation.paid_title,
+            paid_subtitle: dict.confirmation.paid_subtitle,
+            failed_title: dict.confirmation.failed_title,
+            failed_subtitle: dict.confirmation.failed_subtitle,
+          }}
+        />
+      </div>
+
+      <div className="mt-6 rounded-2xl border border-border bg-surface-muted p-7 text-left">
         <Row label={dict.confirmation.order_code} value={order.public_code} />
         <Row label={dict.checkout.full_name} value={order.customer_name} />
         <Row label={dict.checkout.phone} value={order.customer_phone} />
