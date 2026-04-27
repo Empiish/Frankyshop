@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { MessageCircle, Phone, MapPin, Clock } from "lucide-react";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getValue } from "@/lib/site-content";
 
 const ShopMap = dynamic(() => import("@/components/ShopMap").then((m) => m.ShopMap), {
   loading: () => (
@@ -14,11 +15,14 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const dict = await getDictionary(lang as Locale);
+  const L = lang as Locale;
 
-  const wa = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "255000000000").replace(/[^\d]/g, "");
-  const phone = process.env.NEXT_PUBLIC_SHOP_PHONE ?? "+255000000000";
-  const lat = Number(process.env.NEXT_PUBLIC_SHOP_LAT ?? "-6.8161");
-  const lng = Number(process.env.NEXT_PUBLIC_SHOP_LNG ?? "39.2706");
+  const wa = (await getValue("whatsapp_number")).replace(/[^\d]/g, "") || "255000000000";
+  const phone = (await getValue("shop_phone")) || "+255 000 000 000";
+  const lat = Number((await getValue("shop_lat")) || "-6.8161");
+  const lng = Number((await getValue("shop_lng")) || "39.2706");
+  const address = (await getValue("shop_address", L)) || dict.contact.address_value;
+  const hours = (await getValue("shop_hours", L)) || dict.contact.hours_value;
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
@@ -43,22 +47,22 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
             icon={<Phone className="h-5 w-5" />}
             title={dict.contact.phone_label}
             value={phone}
-            href={`tel:${phone}`}
+            href={`tel:${phone.replace(/\s/g, "")}`}
           />
           <ContactRow
             icon={<MapPin className="h-5 w-5" />}
             title={dict.contact.address_label}
-            value={dict.contact.address_value}
+            value={address}
           />
           <ContactRow
             icon={<Clock className="h-5 w-5" />}
             title={dict.contact.hours_label}
-            value={dict.contact.hours_value}
+            value={hours}
           />
         </div>
 
         <div className="lg:col-span-7">
-          <ShopMap lat={lat} lng={lng} label={dict.contact.address_value} />
+          <ShopMap lat={lat} lng={lng} label={address} />
           <p className="mt-3 text-xs text-muted-foreground">
             {dict.contact.map_caption}
           </p>

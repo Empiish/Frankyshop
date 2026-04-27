@@ -20,6 +20,7 @@ export type ProductRow = {
   stock: number;
   is_featured: boolean;
   wholesale_tiers: { min_qty: number; price_tsh: number }[];
+  primary_image_url?: string | null;
 };
 
 export type CategoryRow = {

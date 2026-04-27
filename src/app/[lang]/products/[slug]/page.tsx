@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight } from "lucide-react";
@@ -10,6 +11,7 @@ import {
   localizedProductName,
   localizedSellingTechniques,
 } from "@/lib/products";
+import { sql } from "@/lib/db";
 import { ProductCard } from "@/components/ProductCard";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { formatTSh } from "@/lib/utils";
@@ -35,6 +37,12 @@ export default async function ProductDetailPage({
   const description = localizedProductDescription(product, lang as Locale);
   const techniques = localizedSellingTechniques(product, lang as Locale);
   const related = await getRelatedProducts(product.id, product.category_id);
+  const images = await sql<{ storage_path: string; alt: string | null }[]>`
+    select storage_path, alt from product_images
+    where product_id = ${product.id} order by sort_order asc
+  `;
+  const heroImage = images[0]?.storage_path ?? null;
+  const subImages = images.slice(1, 4);
 
   const wholesale = (product.wholesale_tiers ?? []) as { min_qty: number; price_tsh: number }[];
 
@@ -53,17 +61,39 @@ export default async function ProductDetailPage({
       <section className="mx-auto max-w-7xl px-6 py-10 lg:px-10 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
-            <div className={`relative aspect-square w-full overflow-hidden rounded-[2rem] ${tileGradients[0]}`}>
+            <div className={`relative aspect-square w-full overflow-hidden rounded-[2rem] ${heroImage ? "" : tileGradients[0]}`}>
+              {heroImage && (
+                <Image
+                  src={heroImage}
+                  alt={name}
+                  fill
+                  sizes="(min-width: 1024px) 60vw, 100vw"
+                  className="object-cover"
+                  priority
+                  unoptimized
+                />
+              )}
               <span className="absolute left-5 top-5 rounded-full bg-background/80 px-3 py-1 text-[11px] font-medium tracking-wider text-muted-foreground backdrop-blur">
                 {product.sku}
               </span>
             </div>
             <div className="mt-3 grid grid-cols-3 gap-3">
-              {[1, 2, 3].map((i) => (
+              {(subImages.length > 0 ? subImages : [1, 2, 3].map(() => null)).map((img, i) => (
                 <div
                   key={i}
-                  className={`aspect-square rounded-2xl ${tileGradients[i % tileGradients.length]}`}
-                />
+                  className={`relative aspect-square overflow-hidden rounded-2xl ${img ? "" : tileGradients[(i + 1) % tileGradients.length]}`}
+                >
+                  {img && (
+                    <Image
+                      src={img.storage_path}
+                      alt={img.alt ?? `${name} ${i + 2}`}
+                      fill
+                      sizes="20vw"
+                      className="object-cover"
+                      unoptimized
+                    />
+                  )}
+                </div>
               ))}
             </div>
           </div>
@@ -169,6 +199,7 @@ export default async function ProductDetailPage({
                   lang={lang as Locale}
                   index={i}
                   currencyLabel={dict.common.currency}
+                  imageUrl={p.primary_image_url}
                 />
               ))}
             </div>

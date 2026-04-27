@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Locale } from "@/i18n/config";
@@ -13,6 +14,7 @@ type FeaturedRow = {
   name_sw: string | null;
   name_hi: string | null;
   price_tsh: number;
+  primary_image_url: string | null;
 };
 
 const localeNameField: Record<Locale, keyof FeaturedRow> = {
@@ -38,7 +40,8 @@ export async function FeaturedProducts({
   let products: FeaturedRow[] = [];
   try {
     products = await sql<FeaturedRow[]>`
-      select id, slug, sku, name_en, name_sw, name_hi, price_tsh
+      select id, slug, sku, name_en, name_sw, name_hi, price_tsh,
+             (select storage_path from product_images where product_id = products.id order by sort_order asc limit 1) as primary_image_url
       from products
       where is_active = true and is_featured = true
       order by created_at desc
@@ -83,10 +86,21 @@ export async function FeaturedProducts({
               >
                 <div
                   className={`relative aspect-[4/5] overflow-hidden rounded-2xl ${
-                    tileGradients[idx % tileGradients.length]
+                    p.primary_image_url ? "" : tileGradients[idx % tileGradients.length]
                   }`}
                 >
-                  <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
+                  {p.primary_image_url ? (
+                    <Image
+                      src={p.primary_image_url}
+                      alt={name}
+                      fill
+                      sizes="(min-width: 1024px) 25vw, 50vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                      unoptimized
+                    />
+                  ) : (
+                    <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
+                  )}
                   <span className="absolute left-4 top-4 rounded-full bg-background/80 px-2.5 py-1 text-[10px] font-medium tracking-wider text-muted-foreground backdrop-blur">
                     {p.sku}
                   </span>

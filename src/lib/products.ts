@@ -61,7 +61,8 @@ export async function listProducts(filters: ProductFilters = {}) {
            p.name_en, p.name_sw, p.name_hi,
            p.description_en, p.description_sw, p.description_hi,
            p.selling_techniques_en, p.selling_techniques_sw, p.selling_techniques_hi,
-           p.price_tsh, p.stock, p.is_featured, p.wholesale_tiers
+           p.price_tsh, p.stock, p.is_featured, p.wholesale_tiers,
+           (select storage_path from product_images where product_id = p.id order by sort_order asc limit 1) as primary_image_url
     from products p
     left join categories c on c.id = p.category_id
     where p.is_active = true
@@ -91,7 +92,8 @@ export async function getProductBySlug(slug: string): Promise<ProductRow | null>
            p.name_en, p.name_sw, p.name_hi,
            p.description_en, p.description_sw, p.description_hi,
            p.selling_techniques_en, p.selling_techniques_sw, p.selling_techniques_hi,
-           p.price_tsh, p.stock, p.is_featured, p.wholesale_tiers
+           p.price_tsh, p.stock, p.is_featured, p.wholesale_tiers,
+           (select storage_path from product_images where product_id = p.id order by sort_order asc limit 1) as primary_image_url
     from products p
     left join categories c on c.id = p.category_id
     where p.slug = ${slug} and p.is_active = true
@@ -107,7 +109,8 @@ export async function getRelatedProducts(productId: string, categoryId: string |
            p.name_en, p.name_sw, p.name_hi,
            p.description_en, p.description_sw, p.description_hi,
            p.selling_techniques_en, p.selling_techniques_sw, p.selling_techniques_hi,
-           p.price_tsh, p.stock, p.is_featured, p.wholesale_tiers
+           p.price_tsh, p.stock, p.is_featured, p.wholesale_tiers,
+           (select storage_path from product_images where product_id = p.id order by sort_order asc limit 1) as primary_image_url
     from products p
     left join categories c on c.id = p.category_id
     where p.is_active = true and p.category_id = ${categoryId} and p.id != ${productId}

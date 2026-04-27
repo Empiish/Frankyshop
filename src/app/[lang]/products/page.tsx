@@ -83,6 +83,7 @@ export default async function ProductsPage({
                 lang={lang as Locale}
                 index={i}
                 currencyLabel={dict.common.currency}
+                imageUrl={p.primary_image_url}
               />
             ))}
           </div>

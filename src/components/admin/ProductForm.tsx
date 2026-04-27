@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Trash2 } from "lucide-react";
+import { Trash2, Upload } from "lucide-react";
 import type { CategoryRow } from "@/lib/products-shared";
 import { createProduct, updateProduct, deleteProduct } from "@/app/admin/products/actions";
+import { uploadProductImages } from "@/app/admin/products/upload-action";
 
 export type ProductFormDefaults = {
   id?: string;
@@ -39,7 +40,33 @@ export function ProductForm({
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [imageText, setImageText] = useState(defaults.image_urls_text ?? "");
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const isEdit = Boolean(defaults.id);
+
+  async function onPickFiles(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    if (files.length === 0) return;
+    setUploadError(null);
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      for (const f of files) fd.append("files", f);
+      const res = await uploadProductImages(fd);
+      if (!res.ok) {
+        setUploadError(res.error);
+        return;
+      }
+      const trimmed = imageText.trim();
+      const next = (trimmed ? trimmed + "\n" : "") + res.urls.join("\n");
+      setImageText(next);
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }
 
   function onSubmit(formData: FormData) {
     setError(null);
@@ -116,13 +143,41 @@ export function ProductForm({
         </Card>
 
         <Card title="Images">
+          <div>
+            <p className="text-sm font-medium">Upload from this device</p>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              JPG, PNG, WebP or GIF · up to 8&nbsp;MB each. Files are saved to the site and appended to the URL list below.
+            </p>
+            <div className="mt-3 flex items-center gap-3">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                multiple
+                onChange={onPickFiles}
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-background px-5 text-sm hover:bg-surface-muted disabled:opacity-60"
+              >
+                <Upload className="h-4 w-4" />
+                {uploading ? "Uploading…" : "Choose photos"}
+              </button>
+              {uploadError && <span className="text-xs text-danger">{uploadError}</span>}
+            </div>
+          </div>
+
           <Field
             label="Image URLs"
-            hint="One per line. Paste URLs to product photos hosted anywhere (Cloudinary, Imgur, your CDN). Direct file upload arrives soon."
+            hint="One per line. Uploads land here automatically — you can also paste URLs from other hosts."
           >
             <textarea
               name="image_urls"
-              defaultValue={defaults.image_urls_text}
+              value={imageText}
+              onChange={(e) => setImageText(e.target.value)}
               rows={4}
               className="input font-mono text-xs"
               placeholder="https://example.com/photo-1.jpg&#10;https://example.com/photo-2.jpg"
