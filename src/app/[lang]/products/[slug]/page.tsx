@@ -11,12 +11,14 @@ import {
   localizedProductName,
   localizedSellingTechniques,
 } from "@/lib/products";
+import type { Metadata } from "next";
 import { sql } from "@/lib/db";
 import { ProductCard } from "@/components/ProductCard";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { WishlistButton } from "@/components/WishlistButton";
 import { formatTSh } from "@/lib/utils";
 import { getCurrentCustomer } from "@/lib/customer-auth";
+import { JsonLd, productSchema, breadcrumbSchema } from "@/components/StructuredData";
 
 const tileGradients = [
   "product-tile-gradient-2",
@@ -24,6 +26,42 @@ const tileGradients = [
   "product-tile-gradient-3",
   "product-tile-gradient-4",
 ];
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/products/[slug]">): Promise<Metadata> {
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) return {};
+  const product = await getProductBySlug(slug);
+  if (!product) return {};
+  const name = localizedProductName(product, lang as Locale);
+  const description = localizedProductDescription(product, lang as Locale) ?? undefined;
+  const [hero] = await sql<{ storage_path: string }[]>`
+    select storage_path from product_images where product_id = ${product.id} order by sort_order asc limit 1
+  `;
+  const url = `/${lang}/products/${product.slug}`;
+  return {
+    title: name,
+    description,
+    alternates: {
+      canonical: url,
+      languages: { en: `/en/products/${product.slug}`, sw: `/sw/products/${product.slug}`, hi: `/hi/products/${product.slug}` },
+    },
+    openGraph: {
+      type: "website",
+      url,
+      title: name,
+      description,
+      images: hero ? [{ url: hero.storage_path }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: name,
+      description,
+      images: hero ? [hero.storage_path] : undefined,
+    },
+  };
+}
 
 export default async function ProductDetailPage({
   params,
@@ -54,6 +92,9 @@ export default async function ProductDetailPage({
     `;
     initialInWishlist = w.length > 0;
   }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3011";
+  const productUrl = `${siteUrl}/${lang}/products/${product.slug}`;
 
   const wholesale = (product.wholesale_tiers ?? []) as { min_qty: number; price_tsh: number }[];
 
@@ -207,6 +248,25 @@ export default async function ProductDetailPage({
           </div>
         </div>
       </section>
+
+      <JsonLd
+        data={productSchema({
+          name,
+          description,
+          sku: product.sku,
+          url: productUrl,
+          image: heroImage,
+          priceTsh: product.price_tsh,
+          inStock: product.stock > 0,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: dict.nav.home, url: `${siteUrl}/${lang}` },
+          { name: dict.nav.products, url: `${siteUrl}/${lang}/products` },
+          { name, url: productUrl },
+        ])}
+      />
 
       {related.length > 0 && (
         <section className="border-t border-border bg-surface-muted">
