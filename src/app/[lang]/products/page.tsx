@@ -4,6 +4,7 @@ import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { ProductCard } from "@/components/ProductCard";
 import { CatalogToolbar } from "@/components/CatalogToolbar";
+import { CategoryCircles } from "@/components/CategoryCircles";
 import { listCategories, listProducts } from "@/lib/products";
 
 type SP = {
@@ -39,6 +40,7 @@ export default async function ProductsPage({
 
   return (
     <>
+      <CategoryCircles lang={lang as Locale} />
       <section className="mx-auto max-w-7xl px-6 pb-8 pt-16 lg:px-10 lg:pt-24">
         <p className="eyebrow">{dict.catalog.eyebrow}</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">

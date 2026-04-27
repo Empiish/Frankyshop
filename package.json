@@ -10,7 +10,8 @@
     "db:migrate": "node --env-file=.env.local db/migrate.mjs",
     "db:seed-admin": "node --env-file=.env.local db/seed-admin.mjs",
     "db:seed-images": "node --env-file=.env.local db/seed-images.mjs",
-    "db:seed-plastics": "node --env-file=.env.local db/seed-plastics.mjs"
+    "db:seed-plastics": "node --env-file=.env.local db/seed-plastics.mjs",
+    "db:seed-categories-extra": "node --env-file=.env.local db/seed-categories-extra.mjs"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.21",

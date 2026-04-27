@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-// Hand-picked Unsplash CDN photos. White-background / catalog-style shots
-// take the first slot (the tile that shows on the catalog grid), with a
-// few lifestyle shots in the remaining gallery slots for variety.
-// Customer replaces with their own via the admin upload UI when ready.
+// Catalog-style placeholder photos. Mostly DummyJSON (cdn.dummyjson.com),
+// which serves real e-commerce product shots on white backgrounds — the
+// look the user asked for (Amazon / Williams Sonoma / IKEA-style isolated
+// product photography). A handful of Unsplash white-bg shots fill the
+// gaps where DummyJSON has no match.
+// Customer swaps to their own photos via admin upload when ready.
 
 import postgres from "postgres";
 
@@ -11,49 +13,37 @@ if (!url) { console.error("DATABASE_URL not set"); process.exit(1); }
 
 const sql = postgres(url, { prepare: false, max: 1 });
 
-// Unsplash photo IDs. License: free for commercial use, no attribution required.
-const P = {
-  // Thermos / vacuum flask
-  tumbler_white:    "1544003484-3cd181d17917",  // black Mizu tumbler on WHITE backdrop ★
-  flask_cookies:    "1610399809302-f1dd7ec33187",// flask beside cookies on wood
-  flask_hand:       "1605539582747-ce302b9afca2",// person holding stainless flask
-  flask_grass:      "1592985666128-a89274277995",// flask on grass
-  // Cutlery
-  spoon_white:      "1608068811588-3a67006b7489",// stainless spoon on WHITE surface ★
-  silverware_box:   "1525182461131-614d0df14944",// silverware in container
-  forks_white:      "1550852629-7369ada867a9",   // forks on WHITE bg ★
-  forks_black:      "1584948447649-f0b6e8d19f68",// forks on black bg
-  // Dishes
-  plates_white:     "1462015679637-c0c320830925",// pile of white ceramic plates ★
-  bowl_tray:        "1624895672076-adeb9a79c589",// steel bowl on WHITE ceramic tray ★
-  bowl_egg:         "1593143303977-01da2fd61984",// egg beside steel bowl
-  thali:            "1742281257687-092746ad6021",// Indian thali with side dishes
-};
-
-// Always lead with a clean / white-bg shot (★) — that's the tile customers
-// see in the catalog grid. Secondary slots can be lifestyle/context.
-const SKU_IMAGES = {
-  // Thermos & flasks — silver-tumbler-on-white as hero
-  "FK-TH-001": [P.tumbler_white, P.flask_grass,  P.flask_hand,    P.flask_cookies],
-  "FK-TH-002": [P.tumbler_white, P.flask_hand,   P.flask_grass,   P.flask_cookies],
-  "FK-TH-003": [P.tumbler_white, P.flask_grass,  P.flask_cookies, P.flask_hand],
-
-  // Cutlery — spoon-on-white as hero for spoon SKUs, fork-on-white for fork SKU
-  "FK-CT-001": [P.spoon_white,   P.silverware_box, P.forks_white,  P.forks_black],
-  "FK-CT-002": [P.spoon_white,   P.silverware_box, P.forks_white,  P.forks_black],
-  "FK-CT-003": [P.forks_white,   P.forks_black,    P.spoon_white,  P.silverware_box],
-
-  // Dishes & plates
-  "FK-DS-001": [P.plates_white,  P.thali,          P.bowl_tray,    P.bowl_egg],
-  "FK-DS-002": [P.thali,         P.plates_white,   P.bowl_tray,    P.bowl_egg],
-  "FK-DS-003": [P.bowl_tray,     P.bowl_egg,       P.plates_white, P.thali],
-  "FK-DS-004": [P.silverware_box, P.plates_white,  P.spoon_white,  P.forks_white],
-};
-
-const url800 = (id, crop = "entropy") =>
+const DJ = (slug, n = 1) =>
+  `https://cdn.dummyjson.com/product-images/kitchen-accessories/${slug}/${n}.webp`;
+const DJ_THUMB = (slug) =>
+  `https://cdn.dummyjson.com/product-images/kitchen-accessories/${slug}/thumbnail.webp`;
+const UNSPL = (id, crop = "entropy") =>
   `https://images.unsplash.com/photo-${id}?w=800&h=1000&fit=crop&crop=${crop}&auto=format&q=80`;
 
-const CROPS = ["entropy", "center", "edges", "top"];
+// Hero (slot 0) is what shows on catalog tiles — always the cleanest shot.
+const SKU_IMAGES = {
+  // Thermos & flasks — DummyJSON has no thermos; use Unsplash silver tumbler on white.
+  "FK-TH-001": [UNSPL("1544003484-3cd181d17917"), UNSPL("1544003484-3cd181d17917","center"), UNSPL("1544003484-3cd181d17917","edges"), UNSPL("1544003484-3cd181d17917","top")],
+  "FK-TH-002": [UNSPL("1544003484-3cd181d17917"), UNSPL("1544003484-3cd181d17917","center"), UNSPL("1544003484-3cd181d17917","edges"), UNSPL("1544003484-3cd181d17917","top")],
+  "FK-TH-003": [UNSPL("1544003484-3cd181d17917"), UNSPL("1544003484-3cd181d17917","center"), UNSPL("1544003484-3cd181d17917","edges"), UNSPL("1544003484-3cd181d17917","top")],
+
+  // Cutlery
+  "FK-CT-001": [DJ("spoon", 1), DJ("spoon", 2), DJ("spoon", 3), DJ_THUMB("spoon")],
+  "FK-CT-002": [DJ("spoon", 1), DJ("spoon", 2), DJ("spoon", 3), DJ_THUMB("spoon")],
+  "FK-CT-003": [DJ("fork",  1), DJ("fork",  2), DJ("fork",  3), DJ_THUMB("fork")],
+
+  // Dishes
+  "FK-DS-001": [DJ("plate", 1), DJ("plate", 2), DJ("plate", 3), DJ_THUMB("plate")],
+  "FK-DS-002": [DJ("plate", 1), DJ("plate", 2), DJ_THUMB("plate"), DJ("plate", 3)],
+  "FK-DS-003": [DJ("plate", 1), DJ("plate", 2), DJ_THUMB("plate"), DJ("plate", 3)],
+  "FK-DS-004": [DJ("plate", 1), DJ("spoon", 1), DJ("fork", 1),     DJ("knife", 1)],
+
+  // Plastic & storage
+  "FK-PL-001": [DJ("spoon", 1), DJ("spoon", 2), DJ("spoon", 3), DJ_THUMB("spoon")],
+  "FK-PL-002": [DJ("lunch-box", 1), DJ("lunch-box", 2), DJ_THUMB("lunch-box"), DJ("lunch-box", 3)],
+  "FK-PL-003": [UNSPL("1625562105495-7bca79bbec51"), UNSPL("1625562105495-7bca79bbec51","center"), UNSPL("1625562105495-7bca79bbec51","edges"), UNSPL("1625562105495-7bca79bbec51","top")],
+  "FK-PL-004": [DJ("glass", 1), DJ("glass", 2), DJ_THUMB("glass"), DJ("glass", 3)],
+};
 
 try {
   const cleared = await sql`
@@ -61,11 +51,10 @@ try {
     where storage_path like 'https://dummyimage.com/%'
        or storage_path like 'https://picsum.photos/%'
        or storage_path like 'https://images.unsplash.com/%'
+       or storage_path like 'https://cdn.dummyjson.com/%'
     returning id
   `;
-  if (cleared.length > 0) {
-    console.log(`Cleared ${cleared.length} previous placeholder image(s).`);
-  }
+  if (cleared.length > 0) console.log(`Cleared ${cleared.length} previous placeholder image(s).`);
 
   const products = await sql`
     select p.id, p.sku, p.name_en
@@ -78,16 +67,15 @@ try {
     process.exit(0);
   }
   for (const p of products) {
-    const ids = SKU_IMAGES[p.sku];
-    if (!ids) {
+    const urls = SKU_IMAGES[p.sku];
+    if (!urls) {
       console.log(`⚠ ${p.sku} (${p.name_en}) — no mapping; skipping.`);
       continue;
     }
-    for (let i = 0; i < ids.length; i++) {
-      const photoUrl = url800(ids[i], CROPS[i % CROPS.length]);
+    for (let i = 0; i < urls.length; i++) {
       await sql`
         insert into product_images (product_id, storage_path, alt, sort_order)
-        values (${p.id}, ${photoUrl}, ${p.name_en + " — placeholder"}, ${i})
+        values (${p.id}, ${urls[i]}, ${p.name_en + " — placeholder"}, ${i})
       `;
     }
     console.log(`✓ ${p.sku} ${p.name_en}`);
