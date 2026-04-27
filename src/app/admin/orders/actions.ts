@@ -26,7 +26,9 @@ export async function updateOrderStatus(formData: FormData) {
     return { ok: false as const, error: parsed.error.issues[0]?.message ?? "Invalid input" };
   }
   const v = parsed.data;
-  const [before] = await sql`select status, payment_ref, notes from orders where id = ${v.id}`;
+  const [before] = await sql<{ status: string; customer_id: string | null; total_tsh: number; paid_at: string | null }[]>`
+    select status, customer_id, total_tsh, paid_at from orders where id = ${v.id}
+  `;
   await sql`
     update orders set
       status = ${v.status},
@@ -36,6 +38,17 @@ export async function updateOrderStatus(formData: FormData) {
       updated_at = now()
     where id = ${v.id}
   `;
+  // Award loyalty points the first time an order transitions to paid.
+  if (v.status === "paid" && before && before.status !== "paid" && before.customer_id) {
+    const points = Math.floor(before.total_tsh / 1000);
+    if (points > 0) {
+      await sql`
+        update customers
+        set loyalty_points = loyalty_points + ${points}
+        where id = ${before.customer_id}
+      `;
+    }
+  }
   await sql`
     insert into audit_log (actor_staff_id, actor_role, action, entity_type, entity_id, before_data, after_data)
     values (${session.staffId}, ${session.role}, 'order.status_change', 'order', ${v.id}, ${before as never}, ${v as never})

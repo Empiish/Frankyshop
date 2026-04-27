@@ -18,10 +18,12 @@ export function CheckoutForm({
   lang,
   dict,
   zones,
+  prefill,
 }: {
   lang: Locale;
   dict: Dictionary;
   zones: Zone[];
+  prefill?: { name: string; phone: string; email: string };
 }) {
   const router = useRouter();
   const items = useCart((s) => s.items);
@@ -32,9 +34,9 @@ export function CheckoutForm({
   useEffect(() => setHydrated(true), []);
 
   const [step, setStep] = useState<Step>(1);
-  const [customerName, setCustomerName] = useState("");
-  const [customerPhone, setCustomerPhone] = useState("");
-  const [customerEmail, setCustomerEmail] = useState("");
+  const [customerName, setCustomerName] = useState(prefill?.name ?? "");
+  const [customerPhone, setCustomerPhone] = useState(prefill?.phone ?? "");
+  const [customerEmail, setCustomerEmail] = useState(prefill?.email ?? "");
   const [deliveryZoneId, setDeliveryZoneId] = useState(zones[0]?.id ?? "");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [notes, setNotes] = useState("");

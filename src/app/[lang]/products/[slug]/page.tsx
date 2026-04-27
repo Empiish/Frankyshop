@@ -14,7 +14,9 @@ import {
 import { sql } from "@/lib/db";
 import { ProductCard } from "@/components/ProductCard";
 import { AddToCartButton } from "@/components/AddToCartButton";
+import { WishlistButton } from "@/components/WishlistButton";
 import { formatTSh } from "@/lib/utils";
+import { getCurrentCustomer } from "@/lib/customer-auth";
 
 const tileGradients = [
   "product-tile-gradient-2",
@@ -43,6 +45,15 @@ export default async function ProductDetailPage({
   `;
   const heroImage = images[0]?.storage_path ?? null;
   const subImages = images.slice(1, 4);
+
+  const customer = await getCurrentCustomer();
+  let initialInWishlist = false;
+  if (customer) {
+    const w = await sql`
+      select 1 from wishlist_items where customer_id = ${customer.customerId} and product_id = ${product.id} limit 1
+    `;
+    initialInWishlist = w.length > 0;
+  }
 
   const wholesale = (product.wholesale_tiers ?? []) as { min_qty: number; price_tsh: number }[];
 
@@ -127,20 +138,33 @@ export default async function ProductDetailPage({
               </p>
             )}
 
-            <div className="mt-8">
-              <AddToCartButton
-                product={{
-                  productId: product.id,
-                  sku: product.sku,
-                  slug: product.slug,
-                  name,
-                  unitPriceTsh: product.price_tsh,
-                  stock: product.stock,
-                }}
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="flex-1">
+                <AddToCartButton
+                  product={{
+                    productId: product.id,
+                    sku: product.sku,
+                    slug: product.slug,
+                    name,
+                    unitPriceTsh: product.price_tsh,
+                    stock: product.stock,
+                  }}
+                  labels={{
+                    add: dict.product.add_to_cart,
+                    added: dict.product.added,
+                    out_of_stock: dict.product.out_of_stock,
+                  }}
+                />
+              </div>
+              <WishlistButton
+                productId={product.id}
+                initialInWishlist={initialInWishlist}
+                isLoggedIn={Boolean(customer)}
+                lang={lang}
                 labels={{
-                  add: dict.product.add_to_cart,
-                  added: dict.product.added,
-                  out_of_stock: dict.product.out_of_stock,
+                  saved: dict.product.wishlist_saved,
+                  save: dict.product.wishlist_save,
+                  sign_in_required: dict.product.wishlist_sign_in,
                 }}
               />
             </div>

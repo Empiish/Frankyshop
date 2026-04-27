@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { sql } from "@/lib/db";
-import type { CategoryRow } from "@/lib/products";
 import { CheckoutForm } from "@/components/CheckoutForm";
+import { getCurrentCustomer } from "@/lib/customer-auth";
 
 type Zone = {
   id: string;
@@ -34,5 +34,19 @@ export default async function CheckoutPage({ params }: PageProps<"/[lang]/checko
     fee_tsh: z.fee_tsh,
   }));
 
-  return <CheckoutForm lang={lang as Locale} dict={dict} zones={localizedZones} />;
+  const customer = await getCurrentCustomer();
+  let prefill: { name: string; phone: string; email: string } | undefined;
+  if (customer) {
+    const rows = await sql<{ full_name: string | null; phone: string | null; email: string | null }[]>`
+      select full_name, phone, email from customers where id = ${customer.customerId} limit 1
+    `;
+    const c = rows[0];
+    if (c) prefill = {
+      name: c.full_name ?? customer.fullName ?? "",
+      phone: c.phone ?? "",
+      email: c.email ?? customer.email ?? "",
+    };
+  }
+
+  return <CheckoutForm lang={lang as Locale} dict={dict} zones={localizedZones} prefill={prefill} />;
 }

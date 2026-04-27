@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { sql } from "@/lib/db";
+import { getCurrentCustomer } from "@/lib/customer-auth";
 
 const itemSchema = z.object({
   productId: z.string().min(1),
@@ -49,16 +50,18 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   const subtotal = v.items.reduce((s, i) => s + i.unitPriceTsh * i.quantity, 0);
   const total = subtotal + zone.fee_tsh;
   const orderCode = generateOrderCode();
+  const customer = await getCurrentCustomer();
 
   try {
     const [{ id: orderId }] = await sql<{ id: string }[]>`
       insert into orders (
-        public_code, customer_name, customer_phone, customer_email,
+        public_code, customer_id, customer_name, customer_phone, customer_email,
         delivery_zone_id, delivery_address,
         subtotal_tsh, delivery_fee_tsh, total_tsh,
         status, payment_method, notes
       ) values (
-        ${orderCode}, ${v.customerName}, ${v.customerPhone}, ${v.customerEmail || null},
+        ${orderCode}, ${customer?.customerId ?? null},
+        ${v.customerName}, ${v.customerPhone}, ${v.customerEmail || null},
         ${v.deliveryZoneId}, ${v.deliveryAddress},
         ${subtotal}, ${zone.fee_tsh}, ${total},
         'pending', ${v.paymentMethod}, ${v.notes || null}
