@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "FrankyShop — Vifaa bora vya nyumbani Dar es Salaam",
+    "description": "Termos, vijiko, sahani na zaidi. Vifaa vya nyumbani vya kuaminika kutoka Kariakoo, Dar es Salaam. Lipa kwa M-Pesa au kadi."
+  },
+  "nav": {
+    "home": "Nyumbani",
+    "products": "Bidhaa",
+    "about": "Kuhusu sisi",
+    "contact": "Wasiliana",
+    "search_placeholder": "Tafuta bidhaa au SKU…",
+    "cart": "Kikapu",
+    "account": "Akaunti"
+  },
+  "hero": {
+    "kicker": "Kariakoo, Dar es Salaam",
+    "title": "Vifaa vya nyumbani vinavyodumu.",
+    "subtitle": "Termos, vijiko, sahani na vitu vya kila siku — vilivyochaguliwa kwa ubora, bei nzuri kwa kila mtu.",
+    "cta_shop": "Nunua bidhaa",
+    "cta_about": "Kuhusu duka"
+  },
+  "trust": {
+    "mpesa": "M-Pesa inakubalika",
+    "delivery": "Usafirishaji Dar nzima",
+    "kariakoo": "Tutembelee Kariakoo"
+  },
+  "language_popup": {
+    "title": "Chagua lugha yako",
+    "subtitle": "Unaweza kubadilisha baadaye kutoka kwenye menyu.",
+    "continue": "Endelea"
+  },
+  "footer": {
+    "shop": "Duka",
+    "company": "Kampuni",
+    "support": "Msaada",
+    "contact_whatsapp": "Tutumie WhatsApp",
+    "rights": "Haki zote zimehifadhiwa."
+  },
+  "common": {
+    "loading": "Inapakia…",
+    "currency": "TSh"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "FrankyShop — Quality houseware in Dar es Salaam",
+    "description": "Thermos, teaspoons, talrikar and more. Trusted houseware from Kariakoo, Dar es Salaam. Pay with M-Pesa or card."
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact",
+    "search_placeholder": "Search products or SKU…",
+    "cart": "Cart",
+    "account": "Account"
+  },
+  "hero": {
+    "kicker": "Kariakoo, Dar es Salaam",
+    "title": "Houseware that lasts.",
+    "subtitle": "Thermos, teaspoons, talrikar and everyday essentials — picked for quality, priced for everyone.",
+    "cta_shop": "Shop products",
+    "cta_about": "About the shop"
+  },
+  "trust": {
+    "mpesa": "M-Pesa accepted",
+    "delivery": "Delivery across Dar",
+    "kariakoo": "Visit us in Kariakoo"
+  },
+  "language_popup": {
+    "title": "Choose your language",
+    "subtitle": "You can change this later from the menu.",
+    "continue": "Continue"
+  },
+  "footer": {
+    "shop": "Shop",
+    "company": "Company",
+    "support": "Support",
+    "contact_whatsapp": "WhatsApp us",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "loading": "Loading…",
+    "currency": "TSh"
+  }
+}

@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FrankyShop
 
-## Getting Started
+Modern web shop for a houseware retailer in Kariakoo, Dar es Salaam.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router) + TypeScript + Tailwind v4 + Turbopack
+- Supabase (Postgres + Auth + Storage)
+- Native Next 16 i18n: `app/[lang]/...` with `proxy.ts` locale redirect
+- Locales: `en`, `sw`, `hi` (default `en`)
+- Hosting: Netlify (`@netlify/plugin-nextjs`)
+- Payments: Vodacom M-Pesa Tanzania (Phase 2)
+
+## Local development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # fill in real Supabase + M-Pesa keys
+npm run dev -- -p 3010
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3010 — `proxy.ts` redirects `/` to `/en` (or your `accept-language` match).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Migrations live in `supabase/migrations/`. To apply against a fresh Supabase project:
 
-## Learn More
+```bash
+supabase db push
+psql "$DATABASE_URL" -f supabase/seed.sql
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Project tracking
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Loom scope **FrankyShop**. Tasks: L-145 (Foundation, this), L-146 Storefront, L-147 Payments, L-148 Admin, L-149 Enhancements, L-150 SEO/Launch.
