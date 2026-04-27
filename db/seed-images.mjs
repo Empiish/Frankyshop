@@ -1,12 +1,8 @@
 #!/usr/bin/env node
-// Add product-relevant placeholder photos using real Unsplash CDN images.
-// Hand-picked per category — thermos products show thermos photos,
-// cutlery shows cutlery, dishes show plates/bowls/thali.
-// Customer replaces with their own via the admin upload UI.
-//
-// Idempotent: clears any prior placeholder rows
-// (URLs from picsum.photos, dummyimage.com, or images.unsplash.com)
-// before inserting.
+// Hand-picked Unsplash CDN photos. White-background / catalog-style shots
+// take the first slot (the tile that shows on the catalog grid), with a
+// few lifestyle shots in the remaining gallery slots for variety.
+// Customer replaces with their own via the admin upload UI when ready.
 
 import postgres from "postgres";
 
@@ -15,45 +11,51 @@ if (!url) { console.error("DATABASE_URL not set"); process.exit(1); }
 
 const sql = postgres(url, { prepare: false, max: 1 });
 
-// Unsplash photo IDs hand-picked from search; all CC0 / unsplash license.
+// Unsplash photo IDs. License: free for commercial use, no attribution required.
 const P = {
-  flask_grass: "1592985666128-a89274277995",     // black/white vacuum flask on grass
-  flask_hand:  "1605539582747-ce302b9afca2",     // person holding stainless steel flask
-  spoon:       "1616080854961-4b4f601f3545",     // stainless steel spoon on white plate
-  silverware:  "1525182461131-614d0df14944",     // silverware on container
-  forks_white: "1550852629-7369ada867a9",        // stainless steel forks on white
-  forks_black: "1584948447649-f0b6e8d19f68",     // stainless steel forks on black
-  thali:       "1742281257687-092746ad6021",     // indian thali with side dishes
-  bowl:        "1593143303977-01da2fd61984",     // egg beside stainless steel bowl
+  // Thermos / vacuum flask
+  tumbler_white:    "1544003484-3cd181d17917",  // black Mizu tumbler on WHITE backdrop ★
+  flask_cookies:    "1610399809302-f1dd7ec33187",// flask beside cookies on wood
+  flask_hand:       "1605539582747-ce302b9afca2",// person holding stainless flask
+  flask_grass:      "1592985666128-a89274277995",// flask on grass
+  // Cutlery
+  spoon_white:      "1608068811588-3a67006b7489",// stainless spoon on WHITE surface ★
+  silverware_box:   "1525182461131-614d0df14944",// silverware in container
+  forks_white:      "1550852629-7369ada867a9",   // forks on WHITE bg ★
+  forks_black:      "1584948447649-f0b6e8d19f68",// forks on black bg
+  // Dishes
+  plates_white:     "1462015679637-c0c320830925",// pile of white ceramic plates ★
+  bowl_tray:        "1624895672076-adeb9a79c589",// steel bowl on WHITE ceramic tray ★
+  bowl_egg:         "1593143303977-01da2fd61984",// egg beside steel bowl
+  thali:            "1742281257687-092746ad6021",// Indian thali with side dishes
 };
 
-// Image URL for an Unsplash photo with consistent dimensions and crop.
+// Always lead with a clean / white-bg shot (★) — that's the tile customers
+// see in the catalog grid. Secondary slots can be lifestyle/context.
+const SKU_IMAGES = {
+  // Thermos & flasks — silver-tumbler-on-white as hero
+  "FK-TH-001": [P.tumbler_white, P.flask_grass,  P.flask_hand,    P.flask_cookies],
+  "FK-TH-002": [P.tumbler_white, P.flask_hand,   P.flask_grass,   P.flask_cookies],
+  "FK-TH-003": [P.tumbler_white, P.flask_grass,  P.flask_cookies, P.flask_hand],
+
+  // Cutlery — spoon-on-white as hero for spoon SKUs, fork-on-white for fork SKU
+  "FK-CT-001": [P.spoon_white,   P.silverware_box, P.forks_white,  P.forks_black],
+  "FK-CT-002": [P.spoon_white,   P.silverware_box, P.forks_white,  P.forks_black],
+  "FK-CT-003": [P.forks_white,   P.forks_black,    P.spoon_white,  P.silverware_box],
+
+  // Dishes & plates
+  "FK-DS-001": [P.plates_white,  P.thali,          P.bowl_tray,    P.bowl_egg],
+  "FK-DS-002": [P.thali,         P.plates_white,   P.bowl_tray,    P.bowl_egg],
+  "FK-DS-003": [P.bowl_tray,     P.bowl_egg,       P.plates_white, P.thali],
+  "FK-DS-004": [P.silverware_box, P.plates_white,  P.spoon_white,  P.forks_white],
+};
+
 const url800 = (id, crop = "entropy") =>
   `https://images.unsplash.com/photo-${id}?w=800&h=1000&fit=crop&crop=${crop}&auto=format&q=80`;
 
-// 4 photos per product. First entry is the hero (used in catalog tiles).
-const SKU_IMAGES = {
-  // Thermos & flasks
-  "FK-TH-001": [P.flask_grass, P.flask_hand, P.flask_grass, P.flask_hand],
-  "FK-TH-002": [P.flask_hand, P.flask_grass, P.flask_hand, P.flask_grass],
-  "FK-TH-003": [P.flask_grass, P.flask_hand, P.flask_grass, P.flask_hand],
-
-  // Cutlery
-  "FK-CT-001": [P.spoon, P.silverware, P.forks_white, P.forks_black],
-  "FK-CT-002": [P.silverware, P.spoon, P.forks_black, P.forks_white],
-  "FK-CT-003": [P.forks_white, P.forks_black, P.silverware, P.spoon],
-
-  // Dishes & plates
-  "FK-DS-001": [P.thali, P.bowl, P.thali, P.bowl],
-  "FK-DS-002": [P.thali, P.bowl, P.thali, P.bowl],
-  "FK-DS-003": [P.bowl, P.thali, P.bowl, P.thali],
-  "FK-DS-004": [P.silverware, P.thali, P.bowl, P.forks_white],
-};
-
-const CROPS = ["entropy", "center", "top", "edges"];
+const CROPS = ["entropy", "center", "edges", "top"];
 
 try {
-  // Drop previous placeholder rows so a re-run picks up the new strategy.
   const cleared = await sql`
     delete from product_images
     where storage_path like 'https://dummyimage.com/%'
@@ -65,7 +67,6 @@ try {
     console.log(`Cleared ${cleared.length} previous placeholder image(s).`);
   }
 
-  // Re-insert for every product whose SKU we have a mapping for AND has no images.
   const products = await sql`
     select p.id, p.sku, p.name_en
     from products p
@@ -89,7 +90,7 @@ try {
         values (${p.id}, ${photoUrl}, ${p.name_en + " — placeholder"}, ${i})
       `;
     }
-    console.log(`✓ ${p.sku} ${p.name_en} (${ids.length} photos)`);
+    console.log(`✓ ${p.sku} ${p.name_en}`);
   }
 } catch (err) {
   console.error("Failed:", err.message);
