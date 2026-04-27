@@ -1,22 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import { notFound } from "next/navigation";
-import "../globals.css";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { LanguagePopup } from "@/components/LanguagePopup";
-
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "sw" }, { lang: "hi" }];
@@ -43,16 +31,11 @@ export default async function LocaleLayout({
   const dict = await getDictionary(lang as Locale);
 
   return (
-    <html
-      lang={lang}
-      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
-        <Header lang={lang as Locale} dict={dict} />
-        <main className="flex-1">{children}</main>
-        <Footer lang={lang as Locale} dict={dict} />
-        <LanguagePopup currentLocale={lang as Locale} dict={dict.language_popup} />
-      </body>
-    </html>
+    <>
+      <Header lang={lang as Locale} dict={dict} />
+      <main className="flex-1">{children}</main>
+      <Footer lang={lang as Locale} dict={dict} />
+      <LanguagePopup currentLocale={lang as Locale} dict={dict.language_popup} />
+    </>
   );
 }

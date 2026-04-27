@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, locales, type Locale } from "@/i18n/config";
+import { SESSION_COOKIE, verifySession } from "@/lib/auth-shared";
 
 const LOCALE_COOKIE = "franky_locale";
 
@@ -19,8 +20,25 @@ function detectLocale(request: NextRequest): Locale {
   return defaultLocale;
 }
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Admin routes — not locale-prefixed; require a session except /admin/login.
+  if (pathname.startsWith("/admin")) {
+    if (pathname === "/admin/login" || pathname.startsWith("/admin/login/")) {
+      return;
+    }
+    const token = request.cookies.get(SESSION_COOKIE)?.value;
+    const session = token ? await verifySession(token) : null;
+    if (!session) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/login";
+      url.search = `?next=${encodeURIComponent(pathname)}`;
+      return NextResponse.redirect(url);
+    }
+    return;
+  }
+
   const hasLocale = locales.some(
     (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`),
   );
