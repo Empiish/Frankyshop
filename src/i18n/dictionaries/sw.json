@@ -1,40 +1,67 @@
 {
   "meta": {
-    "title": "FrankyShop — Vifaa bora vya nyumbani Dar es Salaam",
-    "description": "Termos, vijiko, sahani na zaidi. Vifaa vya nyumbani vya kuaminika kutoka Kariakoo, Dar es Salaam. Lipa kwa M-Pesa au kadi."
+    "title": "FrankyShop — Vifaa vya nyumbani vya kila siku Tanzania",
+    "description": "Termos, vijiko na sahani — vilivyochaguliwa kwa ubora, bei nzuri kwa kila mtu. Vifaa vya kuaminika kutoka Kariakoo, Dar es Salaam. Lipa kwa M-Pesa au kadi."
   },
   "nav": {
     "home": "Nyumbani",
-    "products": "Bidhaa",
+    "products": "Duka",
     "about": "Kuhusu sisi",
     "contact": "Wasiliana",
-    "search_placeholder": "Tafuta bidhaa au SKU…",
+    "search_placeholder": "Tafuta kwa jina au SKU…",
     "cart": "Kikapu",
     "account": "Akaunti"
   },
   "hero": {
-    "kicker": "Kariakoo, Dar es Salaam",
-    "title": "Vifaa vya nyumbani vinavyodumu.",
-    "subtitle": "Termos, vijiko, sahani na vitu vya kila siku — vilivyochaguliwa kwa ubora, bei nzuri kwa kila mtu.",
-    "cta_shop": "Nunua bidhaa",
-    "cta_about": "Kuhusu duka"
+    "kicker": "Kariakoo · Dar es Salaam",
+    "title_a": "Vifaa vya nyumbani,",
+    "title_b": "vinavyodumu.",
+    "subtitle": "Termos, vijiko na sahani — tumechagua kipande kwa kipande kwa jinsi familia za Tanzania zinavyopika, kula na kukaribisha.",
+    "cta_shop": "Nunua mkusanyiko",
+    "cta_about": "Soma hadithi yetu"
   },
   "trust": {
-    "mpesa": "M-Pesa inakubalika",
-    "delivery": "Usafirishaji Dar nzima",
+    "mpesa": "Lipa kwa M-Pesa au kadi",
+    "delivery": "Usafirishaji Dar es Salaam nzima",
     "kariakoo": "Tutembelee Kariakoo"
   },
+  "categories": {
+    "thermos": "Termos na chupa",
+    "thermos_caption": "Hifadhi joto. Hifadhi baridi.",
+    "cutlery": "Vijiko na visu",
+    "cutlery_caption": "Vifaa vya kila chakula.",
+    "dishes": "Sahani",
+    "dishes_caption": "Chuma kinachostahili meza yako."
+  },
+  "sections": {
+    "shop_by_category_eyebrow": "Makusanyiko",
+    "shop_by_category_title": "Vimetengenezwa kwa jiko zetu.",
+    "featured_eyebrow": "Vilivyoangaziwa",
+    "featured_title": "Tungeziweka katika nyumba zetu.",
+    "see_all": "Angalia vyote"
+  },
+  "editorial": {
+    "eyebrow": "Hadithi yetu",
+    "title": "Kutoka Kariakoo hadi jiko lako.",
+    "body_1": "Franky imekuwa sehemu ya Kariakoo kwa miaka mingi — duka unaloingia kwa ajili ya kitu kimoja na kuondoka na hadithi. Tunabeba tu vile tunavyotumia wenyewe: vipande vyenye uzito, vifuniko vinavyofunga vizuri.",
+    "body_2": "Sasa unaweza kununua kutoka kwenye simu yako, kulipa kwa M-Pesa, na kufikishiwa nyumbani kote Dar es Salaam.",
+    "cta": "Zaidi kuhusu Franky"
+  },
   "language_popup": {
-    "title": "Chagua lugha yako",
-    "subtitle": "Unaweza kubadilisha baadaye kutoka kwenye menyu.",
+    "title": "Karibu Franky.",
+    "subtitle": "Chagua lugha yako kuendelea. Unaweza kubadilisha wakati wowote.",
     "continue": "Endelea"
   },
   "footer": {
+    "tagline": "Vifaa bora vya nyumbani kwa jinsi nyumba za Tanzania zinavyoishi — tumechagua Kariakoo, tunafikisha Dar.",
+    "newsletter_label": "Pata bidhaa mpya",
+    "newsletter_placeholder": "barua@yako.com",
     "shop": "Duka",
     "company": "Kampuni",
     "support": "Msaada",
     "contact_whatsapp": "Tutumie WhatsApp",
-    "rights": "Haki zote zimehifadhiwa."
+    "rights": "Haki zote zimehifadhiwa.",
+    "address": "Kariakoo, Dar es Salaam · Tanzania"
   },
   "common": {
     "loading": "Inapakia…",

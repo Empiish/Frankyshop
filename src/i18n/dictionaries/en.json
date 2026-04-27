@@ -1,40 +1,67 @@
 {
   "meta": {
-    "title": "FrankyShop — Quality houseware in Dar es Salaam",
-    "description": "Thermos, teaspoons, talrikar and more. Trusted houseware from Kariakoo, Dar es Salaam. Pay with M-Pesa or card."
+    "title": "FrankyShop — Houseware made for everyday Tanzanian homes",
+    "description": "Thermos, cutlery and dishes — picked for quality, priced for everyone. Trusted houseware from Kariakoo, Dar es Salaam. Pay with M-Pesa or card."
   },
   "nav": {
     "home": "Home",
-    "products": "Products",
-    "about": "About",
+    "products": "Shop",
+    "about": "Our story",
     "contact": "Contact",
-    "search_placeholder": "Search products or SKU…",
+    "search_placeholder": "Search by name or SKU…",
     "cart": "Cart",
     "account": "Account"
   },
   "hero": {
-    "kicker": "Kariakoo, Dar es Salaam",
-    "title": "Houseware that lasts.",
-    "subtitle": "Thermos, teaspoons, talrikar and everyday essentials — picked for quality, priced for everyone.",
-    "cta_shop": "Shop products",
-    "cta_about": "About the shop"
+    "kicker": "Kariakoo · Dar es Salaam",
+    "title_a": "Houseware,",
+    "title_b": "made to last.",
+    "subtitle": "Thermos, cutlery and dishes — chosen piece by piece for the way Tanzanian families actually cook, eat and host.",
+    "cta_shop": "Shop the collection",
+    "cta_about": "Read our story"
   },
   "trust": {
-    "mpesa": "M-Pesa accepted",
-    "delivery": "Delivery across Dar",
-    "kariakoo": "Visit us in Kariakoo"
+    "mpesa": "Pay with M-Pesa or card",
+    "delivery": "Delivery across Dar es Salaam",
+    "kariakoo": "Visit the shop in Kariakoo"
+  },
+  "categories": {
+    "thermos": "Thermos & flasks",
+    "thermos_caption": "Keep it hot. Keep it cold.",
+    "cutlery": "Cutlery",
+    "cutlery_caption": "Quiet workhorses for every meal.",
+    "dishes": "Dishes & plates",
+    "dishes_caption": "Steel that earns its place at the table."
+  },
+  "sections": {
+    "shop_by_category_eyebrow": "Collections",
+    "shop_by_category_title": "Built for the kitchens we cook in.",
+    "featured_eyebrow": "Featured",
+    "featured_title": "What we'd put in our own home.",
+    "see_all": "See everything"
+  },
+  "editorial": {
+    "eyebrow": "Our story",
+    "title": "From Kariakoo to your kitchen.",
+    "body_1": "Franky has been part of Kariakoo for years — the kind of shop you walk into for one thing and leave with a story. We carry only what we'd use ourselves: pieces with weight, finishes that don't peel, lids that close properly the hundredth time.",
+    "body_2": "Now you can shop the same shelves from your phone, with M-Pesa, and have it brought to your door across Dar es Salaam.",
+    "cta": "More about Franky"
   },
   "language_popup": {
-    "title": "Choose your language",
-    "subtitle": "You can change this later from the menu.",
+    "title": "Welcome to Franky.",
+    "subtitle": "Pick your language to continue. You can change it any time.",
     "continue": "Continue"
   },
   "footer": {
+    "tagline": "Quality houseware for the way Tanzanian homes actually live — picked in Kariakoo, delivered across Dar.",
+    "newsletter_label": "Get new arrivals",
+    "newsletter_placeholder": "your@email.com",
     "shop": "Shop",
     "company": "Company",
     "support": "Support",
     "contact_whatsapp": "WhatsApp us",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "address": "Kariakoo, Dar es Salaam · Tanzania"
   },
   "common": {
     "loading": "Loading…",
