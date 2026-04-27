@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Search, ShoppingBag, User, Menu, X } from "lucide-react";
+import { Search, User, Menu, X } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { CartIndicator } from "./CartIndicator";
 
 export function Header({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   const [scrolled, setScrolled] = useState(false);
@@ -73,13 +74,7 @@ export function Header({ lang, dict }: { lang: Locale; dict: Dictionary }) {
           >
             <User className="h-4 w-4" />
           </Link>
-          <Link
-            href={`/${lang}/cart`}
-            aria-label={dict.nav.cart}
-            className="relative flex h-9 w-9 items-center justify-center rounded-full hover:bg-surface-muted"
-          >
-            <ShoppingBag className="h-4 w-4" />
-          </Link>
+          <CartIndicator href={`/${lang}/cart`} ariaLabel={dict.nav.cart} />
         </div>
       </div>
 

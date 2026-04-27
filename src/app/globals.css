@@ -71,6 +71,21 @@ body {
     linear-gradient(180deg, #fefcf9 0%, #ffffff 100%);
 }
 
+.input {
+  display: block;
+  width: 100%;
+  height: 2.75rem;
+  padding: 0 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--background);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 150ms;
+}
+.input:focus { border-color: var(--accent); }
+textarea.input { height: auto; padding: 0.7rem 1rem; }
+
 .product-tile-gradient-1 { background: linear-gradient(135deg, #f7f3ee 0%, #ede5da 100%); }
 .product-tile-gradient-2 { background: linear-gradient(135deg, #f5ede4 0%, #e6d4be 100%); }
 .product-tile-gradient-3 { background: linear-gradient(135deg, #faf6f0 0%, #ede0cc 100%); }
