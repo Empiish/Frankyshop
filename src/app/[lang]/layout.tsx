@@ -4,6 +4,7 @@ import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { getCurrentStaff } from "@/lib/auth";
 import { LanguagePopup } from "@/components/LanguagePopup";
 import {
   JsonLd,
@@ -59,6 +60,7 @@ export default async function LocaleLayout({
   if (!isLocale(lang)) notFound();
   const dict = await getDictionary(lang as Locale);
 
+  const staff = await getCurrentStaff();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3011";
   const phone = (await getValue("shop_phone")) || "+255 000 000 000";
   const lat = Number((await getValue("shop_lat")) || "-6.8161");
@@ -69,7 +71,7 @@ export default async function LocaleLayout({
 
   return (
     <>
-      <Header lang={lang as Locale} dict={dict} />
+      <Header lang={lang as Locale} dict={dict} isStaff={!!staff} />
       <main className="flex-1">{children}</main>
       <Footer lang={lang as Locale} dict={dict} />
       <LanguagePopup currentLocale={lang as Locale} dict={dict.language_popup} />

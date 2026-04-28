@@ -8,7 +8,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { CartIndicator } from "./CartIndicator";
 
-export function Header({ lang, dict }: { lang: Locale; dict: Dictionary }) {
+export function Header({ lang, dict, isStaff }: { lang: Locale; dict: Dictionary; isStaff?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -75,6 +75,14 @@ export function Header({ lang, dict }: { lang: Locale; dict: Dictionary }) {
             <User className="h-4 w-4" />
           </Link>
           <CartIndicator href={`/${lang}/cart`} ariaLabel={dict.nav.cart} />
+          {isStaff && (
+            <Link
+              href="/admin"
+              className="ml-1 hidden h-7 items-center rounded-full bg-foreground px-3 text-xs font-medium text-background hover:bg-accent transition-colors md:flex"
+            >
+              Admin
+            </Link>
+          )}
         </div>
       </div>
 

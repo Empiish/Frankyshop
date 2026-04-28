@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { sql } from "@/lib/db";
 import { setCustomerCookie } from "@/lib/customer-auth";
+import { setSessionCookie } from "@/lib/auth";
 
 const signInSchema = z.object({
   email: z.string().email(),
@@ -32,6 +33,21 @@ export async function customerSignIn(formData: FormData): Promise<ActionResult> 
   });
   if (!parsed.success) return { ok: false, error: "Enter your email and password." };
   const { email, password, lang, next } = parsed.data;
+
+  // Check staff_users first — if match, set admin cookie and redirect to shop home.
+  const staffRows = await sql<
+    { id: string; email: string; full_name: string | null; password_hash: string; role: "admin" | "staff"; is_active: boolean }[]
+  >`select id, email, full_name, password_hash, role, is_active from staff_users where email = ${email} limit 1`;
+  const staffRow = staffRows[0];
+  if (staffRow && staffRow.is_active && await bcrypt.compare(password, staffRow.password_hash)) {
+    await setSessionCookie({
+      staffId: staffRow.id,
+      email: staffRow.email,
+      role: staffRow.role,
+      fullName: staffRow.full_name,
+    });
+    redirect(`/${lang}`);
+  }
 
   const rows = await sql<
     { id: string; email: string; full_name: string | null; password_hash: string | null }[]
