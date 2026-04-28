@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import { getCurrentStaff } from "@/lib/auth";
 import { AdminShell } from "@/components/admin/AdminShell";

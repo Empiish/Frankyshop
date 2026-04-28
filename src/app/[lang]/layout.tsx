@@ -13,6 +13,8 @@ import {
 } from "@/components/StructuredData";
 import { getValue } from "@/lib/site-content";
 
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "sw" }, { lang: "hi" }];
 }
