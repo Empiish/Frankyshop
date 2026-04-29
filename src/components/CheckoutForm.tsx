@@ -43,6 +43,7 @@ export function CheckoutForm({
   const [paymentMethod, setPaymentMethod] = useState<"mpesa" | "card_placeholder">("mpesa");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [tosAccepted, setTosAccepted] = useState(false);
 
   const zone = useMemo(
     () => zones.find((z) => z.id === deliveryZoneId) ?? zones[0],
@@ -77,7 +78,7 @@ export function CheckoutForm({
 
   const canAdvance1 = customerName.trim() && customerPhone.trim().length >= 7;
   const canAdvance2 = deliveryZoneId && deliveryAddress.trim();
-  const canSubmit = canAdvance1 && canAdvance2 && paymentMethod;
+  const canSubmit = canAdvance1 && canAdvance2 && paymentMethod && tosAccepted;
 
   async function submit() {
     if (paymentMethod === "card_placeholder") {
@@ -237,6 +238,29 @@ export function CheckoutForm({
                   disabled
                 />
               </div>
+              {/* Terms & Conditions acceptance */}
+              <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-border px-5 py-4 transition-colors hover:bg-surface-muted">
+                <input
+                  type="checkbox"
+                  checked={tosAccepted}
+                  onChange={(e) => setTosAccepted(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-accent"
+                />
+                <span className="text-sm leading-relaxed text-muted-foreground">
+                  I have read and agree to the{" "}
+                  <a
+                    href={`/${lang}/terms`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-foreground underline underline-offset-2 hover:text-accent"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Terms &amp; Conditions
+                  </a>
+                  , including the delivery and returns policy.
+                </span>
+              </label>
+
               {error && (
                 <p className="rounded-xl border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger">
                   {error}

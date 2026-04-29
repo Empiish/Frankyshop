@@ -59,6 +59,7 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
               <Link href={`/${lang}/contact`}>{dict.nav.contact}</Link>
             </FooterCol>
             <FooterCol title={dict.footer.support}>
+              <Link href={`/${lang}/terms`}>Terms &amp; Conditions</Link>
               <a
                 href="https://wa.me/255000000000"
                 target="_blank"

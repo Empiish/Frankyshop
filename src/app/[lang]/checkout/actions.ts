@@ -4,6 +4,7 @@ import { z } from "zod";
 import { sql } from "@/lib/db";
 import { getCurrentCustomer } from "@/lib/customer-auth";
 import { getPaymentProvider } from "@/lib/payments";
+import { sendOrderConfirmation } from "@/lib/email";
 
 const itemSchema = z.object({
   productId: z.string().min(1),
@@ -22,6 +23,7 @@ const placeOrderSchema = z.object({
   notes: z.string().max(500).optional().or(z.literal("")),
   paymentMethod: z.enum(["mpesa", "card_placeholder"]),
   items: z.array(itemSchema).min(1),
+  testMode: z.boolean().optional(),
 });
 
 export type PlaceOrderInput = z.input<typeof placeOrderSchema>;
@@ -54,6 +56,8 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   const customer = await getCurrentCustomer();
 
   try {
+    const initialStatus = v.testMode ? "paid" : "pending";
+
     const [{ id: orderId }] = await sql<{ id: string }[]>`
       insert into orders (
         public_code, customer_id, customer_name, customer_phone, customer_email,
@@ -65,7 +69,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
         ${v.customerName}, ${v.customerPhone}, ${v.customerEmail || null},
         ${v.deliveryZoneId}, ${v.deliveryAddress},
         ${subtotal}, ${zone.fee_tsh}, ${total},
-        'pending', ${v.paymentMethod}, ${v.notes || null}
+        ${initialStatus}, ${v.paymentMethod}, ${v.notes || null}
       )
       returning id
     `;
@@ -77,12 +81,31 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       `;
     }
 
-    // Kick off the payment if M-Pesa was selected. Mock provider returns
-    // immediately and flips status in the background; the real Vodacom
-    // provider does it inside this same call. We don't await failure here —
-    // the order itself is already saved, the customer hits the confirmation
-    // page and polls for status updates.
-    if (v.paymentMethod === "mpesa") {
+    // Get zone name for receipt
+    const [zoneRow] = await sql<{ name_en: string }[]>`
+      select name_en from delivery_zones where id = ${v.deliveryZoneId} limit 1
+    `;
+
+    // Send confirmation email (non-blocking — don't fail the order if email fails)
+    if (v.customerEmail) {
+      sendOrderConfirmation({
+        orderCode,
+        customerName: v.customerName,
+        customerEmail: v.customerEmail,
+        customerPhone: v.customerPhone,
+        deliveryAddress: v.deliveryAddress,
+        deliveryZoneName: zoneRow?.name_en ?? "Dar es Salaam",
+        deliveryFeeTsh: zone.fee_tsh,
+        subtotalTsh: subtotal,
+        totalTsh: total,
+        items: v.items,
+        createdAt: new Date(),
+        isTest: v.testMode,
+      }).catch((err) => console.error("[email] confirmation failed", err));
+    }
+
+    // Kick off payment — skip for test orders
+    if (v.paymentMethod === "mpesa" && !v.testMode) {
       const provider = getPaymentProvider();
       provider
         .initiate({
