@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -94,19 +93,12 @@ function Tile({
       } ${className}`}
     >
       {/* Product image */}
-      <div className="absolute inset-0 flex items-center justify-end transition-transform duration-700 ease-out group-hover:scale-[1.03]">
-        <Image
-          src={tile.image}
-          alt={tile.label}
-          width={tall ? 260 : 200}
-          height={tall ? 320 : 200}
-          className={`object-contain drop-shadow-xl ${
-            tall
-              ? "mr-6 max-h-[70%] w-auto"
-              : "mr-6 max-h-[75%] w-auto"
-          }`}
-        />
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={tile.image}
+        alt={tile.label}
+        className="absolute right-6 top-1/2 h-[65%] w-auto -translate-y-1/2 object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+      />
       {/* Text */}
       <div className="relative z-10 flex w-full flex-col justify-end p-7 lg:p-9">
         <p className="eyebrow text-foreground/60">{tile.caption}</p>
