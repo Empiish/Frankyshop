@@ -13,7 +13,7 @@ export default function TestOrderPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("+255700000000");
   const [name, setName] = useState("Test Customer");
-  const [zoneId, setZoneId] = useState("");
+  const [zoneId, setZoneId] = useState("347bc895-b64a-4d9c-b995-1fb33628612d");
   const [result, setResult] = useState<{ ok: boolean; code?: string; error?: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
