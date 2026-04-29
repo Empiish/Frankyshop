@@ -97,7 +97,8 @@ function Tile({
       <img
         src={tile.image}
         alt={tile.label}
-        className="absolute right-6 top-1/2 h-[65%] w-auto -translate-y-1/2 object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+        className="absolute right-6 top-1/2 h-[65%] w-auto -translate-y-1/2 object-contain transition-transform duration-700 ease-out group-hover:scale-[1.06] mix-blend-mode-multiply"
+        style={{ mixBlendMode: "multiply" }}
       />
       {/* Text */}
       <div className="relative z-10 flex w-full flex-col justify-end p-7 lg:p-9">
