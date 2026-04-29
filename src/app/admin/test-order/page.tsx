@@ -5,8 +5,8 @@ import { FlaskConical, ArrowRight, CheckCircle2, XCircle } from "lucide-react";
 import { placeOrder } from "@/app/[lang]/checkout/actions";
 
 const TEST_ITEMS = [
-  { productId: "00000000-0000-0000-0000-000000000001", sku: "FK-TEST-001", name: "Test Product A", unitPriceTsh: 8500, quantity: 2 },
-  { productId: "00000000-0000-0000-0000-000000000002", sku: "FK-TEST-002", name: "Test Product B", unitPriceTsh: 3500, quantity: 1 },
+  { productId: "4c7321ca-b3c6-4ef9-8be4-b3b621ad0561", sku: "FK-PL-002", name: "Food Storage Container 5L", unitPriceTsh: 12000, quantity: 2 },
+  { productId: "c0d2a914-ad70-446e-9c25-684c603cf99a", sku: "FK-CT-003", name: "Shoe Brush", unitPriceTsh: 7500, quantity: 1 },
 ];
 
 export default function TestOrderPage() {
