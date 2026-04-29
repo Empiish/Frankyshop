@@ -101,7 +101,10 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
         items: v.items,
         createdAt: new Date(),
         isTest: v.testMode,
-      }).catch((err) => console.error("[email] confirmation failed", err));
+      }).catch((err) => {
+        console.error("[email] confirmation failed", JSON.stringify(err));
+        console.error("[email] error detail", err?.message, err?.statusCode, JSON.stringify(err?.response));
+      });
     }
 
     // Kick off payment — skip for test orders
