@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "FrankyShop — Vifaa vya nyumbani vya kila siku Tanzania",
-    "description": "Termos, vijiko na sahani — vilivyochaguliwa kwa ubora, bei nzuri kwa kila mtu. Vifaa vya kuaminika kutoka Kariakoo, Dar es Salaam. Lipa kwa M-Pesa au kadi."
+    "title": "FrankyShop — Vifaa vya Usafi kutoka Kariakoo",
+    "description": "Mafagio, mop, msagaji na vifaa vya kusafisha — vilivyochaguliwa kwa ubora, bei nzuri kwa kila mtu. Vifaa vya kuaminika kutoka Kariakoo, Dar es Salaam. Lipa kwa M-Pesa au kadi."
   },
   "nav": {
     "home": "Nyumbani",
@@ -14,9 +14,9 @@
   },
   "hero": {
     "kicker": "Kariakoo · Dar es Salaam",
-    "title_a": "Vifaa vya nyumbani,",
+    "title_a": "Vifaa vya usafi,",
     "title_b": "vinavyodumu.",
-    "subtitle": "Termos, vijiko na sahani — tumechagua kipande kwa kipande kwa jinsi familia za Tanzania zinavyopika, kula na kukaribisha.",
+    "subtitle": "Mafagio, mop, msagaji na zaidi — tumechagua kipande kwa kipande kwa jinsi nyumba za Tanzania zinavyosafisha na kutunza nafasi zao.",
     "cta_shop": "Nunua mkusanyiko",
     "cta_about": "Soma hadithi yetu"
   },
@@ -26,24 +26,24 @@
     "kariakoo": "Tutembelee Kariakoo"
   },
   "categories": {
-    "thermos": "Termos na chupa",
-    "thermos_caption": "Hifadhi joto. Hifadhi baridi.",
-    "cutlery": "Vijiko na visu",
-    "cutlery_caption": "Vifaa vya kila chakula.",
-    "dishes": "Sahani",
-    "dishes_caption": "Chuma kinachostahili meza yako."
+    "thermos": "Usafi",
+    "thermos_caption": "Vifaa vinavyofanya kazi.",
+    "cutlery": "Brashi na viscrubber",
+    "cutlery_caption": "Kila kona imefunikwa.",
+    "dishes": "Mop na msagaji",
+    "dishes_caption": "Sakafu zinazong'aa."
   },
   "sections": {
     "shop_by_category_eyebrow": "Makusanyiko",
-    "shop_by_category_title": "Vimetengenezwa kwa jiko zetu.",
+    "shop_by_category_title": "Vimetengenezwa kwa nyumba tunazosafisha.",
     "featured_eyebrow": "Vilivyoangaziwa",
     "featured_title": "Tungeziweka katika nyumba zetu.",
     "see_all": "Angalia vyote"
   },
   "editorial": {
     "eyebrow": "Hadithi yetu",
-    "title": "Kutoka Kariakoo hadi jiko lako.",
-    "body_1": "Franky imekuwa sehemu ya Kariakoo kwa miaka mingi — duka unaloingia kwa kitu kimoja na kuondoka na hadithi. Tunabeba tu vile tunavyotumia wenyewe: vipande vyenye uzito, vifuniko vinavyofunga vizuri.",
+    "title": "Kutoka Kariakoo hadi nyumba yako.",
+    "body_1": "Franky imekuwa sehemu ya Kariakoo kwa miaka mingi — duka unaloingia kwa kitu kimoja na kuondoka na hadithi. Tunabeba tu vile tunavyotumia wenyewe: zana zinazosafisha vizuri, nywele zinazobaki sura yake, na mishiko isiyoteleza mikononi.",
     "body_2": "Sasa unaweza kununua kutoka kwenye simu yako, kulipa kwa M-Pesa, na kufikishiwa nyumbani kote Dar es Salaam.",
     "cta": "Zaidi kuhusu Franky"
   },
@@ -53,7 +53,7 @@
     "continue": "Endelea"
   },
   "footer": {
-    "tagline": "Vifaa bora vya nyumbani kwa jinsi nyumba za Tanzania zinavyoishi — tumechagua Kariakoo, tunafikisha Dar.",
+    "tagline": "Vifaa bora vya usafi kwa jinsi nyumba za Tanzania zinavyoishi — tumechagua Kariakoo, tunafikisha Dar.",
     "newsletter_label": "Pata bidhaa mpya",
     "newsletter_placeholder": "barua@yako.com",
     "shop": "Duka",
@@ -197,8 +197,8 @@
     "eyebrow": "Hadithi yetu",
     "title_a": "Tulianza na",
     "title_b": "vile tunavyotumia wenyewe.",
-    "p1": "Franky ilianza kama rafu ndogo ndani ya duka la Kariakoo — termos chache, sahani kadhaa, na imani kwamba ubora unaohisi mkononi mwako unajiuza wenyewe.",
-    "p2": "Miaka baadaye, bado tunafanya jambo lile lile. Tunachagua kwa mkono, tunapima kila kipande kabla ya kupata nafasi rafuni, na tunabeba bidhaa tu zinazostahimili nyumba ya Tanzania — watoto, chai ya moto, chakula cha jioni, Jumapili nzima.",
+    "p1": "Franky ilianza kama rafu ndogo ndani ya duka la Kariakoo — mafagio machache, brashi kadhaa, na imani kwamba ubora unaohisi mkononi mwako unajiuza wenyewe.",
+    "p2": "Miaka baadaye, bado tunafanya jambo lile lile. Tunachagua kwa mkono, tunapima kila zana kabla ya kupata nafasi rafuni, na tunabeba bidhaa tu zinazostahimili nyumba ya Tanzania — sakafu za vumbi, baraza zenye unyevu, njia zenye msongamano, Jumapili nzima.",
     "p3": "Tovuti ni mpya. Duka, na jinsi tunavyoifikiria, si mpya.",
     "pillar1_title": "Tumechagua, hatujajaza tu.",
     "pillar1_body": "Hatununui kwa katalogi. Kila kitu rafuni kimetumika, kimedondoshwa, kimeoshwa, na kuamuliwa kwanza.",

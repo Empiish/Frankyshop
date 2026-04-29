@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "FrankyShop — Houseware made for everyday Tanzanian homes",
-    "description": "Thermos, cutlery and dishes — picked for quality, priced for everyone. Trusted houseware from Kariakoo, Dar es Salaam. Pay with M-Pesa or card."
+    "title": "FrankyShop — Cleaning & Household Tools from Kariakoo",
+    "description": "Brooms, mops, squeegees and household cleaning tools — picked for quality, priced for everyone. Trusted supplies from Kariakoo, Dar es Salaam. Pay with M-Pesa or card."
   },
   "nav": {
     "home": "Home",
@@ -14,9 +14,9 @@
   },
   "hero": {
     "kicker": "Kariakoo · Dar es Salaam",
-    "title_a": "Houseware,",
-    "title_b": "made to last.",
-    "subtitle": "Thermos, cutlery and dishes — chosen piece by piece for the way Tanzanian families actually cook, eat and host.",
+    "title_a": "Cleaning tools,",
+    "title_b": "built to last.",
+    "subtitle": "Brooms, mops, squeegees and more — chosen piece by piece for the way Tanzanian homes actually clean and care for their spaces.",
     "cta_shop": "Shop the collection",
     "cta_about": "Read our story"
   },
@@ -26,24 +26,24 @@
     "kariakoo": "Visit the shop in Kariakoo"
   },
   "categories": {
-    "thermos": "Thermos & flasks",
-    "thermos_caption": "Keep it hot. Keep it cold.",
-    "cutlery": "Cutlery",
-    "cutlery_caption": "Quiet workhorses for every meal.",
-    "dishes": "Dishes & plates",
-    "dishes_caption": "Steel that earns its place at the table."
+    "thermos": "Cleaning",
+    "thermos_caption": "Tools that do the work.",
+    "cutlery": "Brushes & scrubbers",
+    "cutlery_caption": "Every corner covered.",
+    "dishes": "Mops & squeegees",
+    "dishes_caption": "Floors that shine."
   },
   "sections": {
     "shop_by_category_eyebrow": "Collections",
-    "shop_by_category_title": "Built for the kitchens we cook in.",
+    "shop_by_category_title": "Built for the homes we clean in.",
     "featured_eyebrow": "Featured",
     "featured_title": "What we'd put in our own home.",
     "see_all": "See everything"
   },
   "editorial": {
     "eyebrow": "Our story",
-    "title": "From Kariakoo to your kitchen.",
-    "body_1": "Franky has been part of Kariakoo for years — the kind of shop you walk into for one thing and leave with a story. We carry only what we'd use ourselves: pieces with weight, finishes that don't peel, lids that close properly the hundredth time.",
+    "title": "From Kariakoo to your home.",
+    "body_1": "Franky has been part of Kariakoo for years — the kind of shop you walk into for one thing and leave with a story. We carry only what we'd use ourselves: tools that scrub properly, bristles that hold their shape, handles that don't slip in wet hands.",
     "body_2": "Now you can shop the same shelves from your phone, with M-Pesa, and have it brought to your door across Dar es Salaam.",
     "cta": "More about Franky"
   },
@@ -53,7 +53,7 @@
     "continue": "Continue"
   },
   "footer": {
-    "tagline": "Quality houseware for the way Tanzanian homes actually live — picked in Kariakoo, delivered across Dar.",
+    "tagline": "Quality cleaning tools for the way Tanzanian homes actually live — picked in Kariakoo, delivered across Dar.",
     "newsletter_label": "Get new arrivals",
     "newsletter_placeholder": "your@email.com",
     "shop": "Shop",
@@ -197,8 +197,8 @@
     "eyebrow": "Our story",
     "title_a": "We started with",
     "title_b": "what we'd use ourselves.",
-    "p1": "Franky began as a small shelf inside a Kariakoo shop — a few thermos flasks, a stack of plates, and the conviction that quality you can feel in your hand sells itself.",
-    "p2": "Years later, we're still doing the same thing. We pick by hand, weight every piece before it earns space on the shelf, and only carry brands that hold up to a Tanzanian household — kids, hot tea, late dinners, full Sundays.",
+    "p1": "Franky began as a small shelf inside a Kariakoo shop — a few brooms, a stack of brushes, and the conviction that quality you can feel in your hand sells itself.",
+    "p2": "Years later, we're still doing the same thing. We pick by hand, test every tool before it earns space on the shelf, and only carry brands that hold up to a Tanzanian household — dusty floors, wet verandas, high-traffic hallways, full Sundays.",
     "p3": "The website is new. The shop, and the way we think about it, isn't.",
     "pillar1_title": "Picked, not stocked.",
     "pillar1_body": "We don't buy by the catalogue. Every item on the shelf has been used, dropped, washed, and decided on first.",
