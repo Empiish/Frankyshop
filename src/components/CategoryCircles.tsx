@@ -31,6 +31,10 @@ export async function CategoryCircles({ lang }: { lang: Locale }) {
              limit 1
            ) as image
     from categories c
+    where exists (
+      select 1 from products p
+      where p.category_id = c.id and p.is_active = true
+    )
     order by c.sort_order asc, c.name_en asc
   `;
 

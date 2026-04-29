@@ -26,12 +26,16 @@
     "kariakoo": "Tutembelee Kariakoo"
   },
   "categories": {
-    "thermos": "Usafi",
-    "thermos_caption": "Vifaa vinavyofanya kazi.",
-    "cutlery": "Brashi na viscrubber",
-    "cutlery_caption": "Kila kona imefunikwa.",
-    "dishes": "Mop na msagaji",
-    "dishes_caption": "Sakafu zinazong'aa."
+    "brooms": "Mafagio",
+    "brooms_caption": "Fagia vizuri.",
+    "brushes": "Brashi na viscrubber",
+    "brushes_caption": "Kila kona imefunikwa.",
+    "mops": "Mop na msagaji",
+    "mops_caption": "Sakafu zinazong'aa.",
+    "squeegees": "Visagaji",
+    "rakes": "Reki",
+    "dustpans": "Mapanga",
+    "bathroom": "Bafuni na Choo"
   },
   "sections": {
     "shop_by_category_eyebrow": "Makusanyiko",

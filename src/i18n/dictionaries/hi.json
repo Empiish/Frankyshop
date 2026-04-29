@@ -26,12 +26,16 @@
     "kariakoo": "करियाकू में हमसे मिलें"
   },
   "categories": {
-    "thermos": "सफाई",
-    "thermos_caption": "काम करने वाले उपकरण।",
-    "cutlery": "ब्रश और स्क्रबर",
-    "cutlery_caption": "हर कोना ढका हुआ।",
-    "dishes": "पोछा और स्क्वीजी",
-    "dishes_caption": "चमकते हुए फर्श।"
+    "brooms": "झाड़ू",
+    "brooms_caption": "साफ झाड़ू लगाएं।",
+    "brushes": "ब्रश और स्क्रबर",
+    "brushes_caption": "हर कोना ढका हुआ।",
+    "mops": "पोछा और स्क्वीजी",
+    "mops_caption": "चमकते हुए फर्श।",
+    "squeegees": "स्क्वीजी",
+    "rakes": "रेक",
+    "dustpans": "डस्टपैन",
+    "bathroom": "बाथरूम और टॉयलेट"
   },
   "sections": {
     "shop_by_category_eyebrow": "कलेक्शन",

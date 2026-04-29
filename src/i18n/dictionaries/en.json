@@ -26,12 +26,16 @@
     "kariakoo": "Visit the shop in Kariakoo"
   },
   "categories": {
-    "thermos": "Cleaning",
-    "thermos_caption": "Tools that do the work.",
-    "cutlery": "Brushes & scrubbers",
-    "cutlery_caption": "Every corner covered.",
-    "dishes": "Mops & squeegees",
-    "dishes_caption": "Floors that shine."
+    "brooms": "Brooms",
+    "brooms_caption": "Sweep it clean.",
+    "brushes": "Brushes & scrubbers",
+    "brushes_caption": "Every corner covered.",
+    "mops": "Mops & squeegees",
+    "mops_caption": "Floors that shine.",
+    "squeegees": "Squeegees",
+    "rakes": "Rakes",
+    "dustpans": "Dustpans",
+    "bathroom": "Bathroom & Toilet"
   },
   "sections": {
     "shop_by_category_eyebrow": "Collections",

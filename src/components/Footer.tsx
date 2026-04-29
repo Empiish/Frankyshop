@@ -41,14 +41,17 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
           <div className="grid grid-cols-2 gap-8 lg:col-span-7 lg:grid-cols-3">
             <FooterCol title={dict.footer.shop}>
               <Link href={`/${lang}/products`}>{dict.nav.products}</Link>
-              <Link href={`/${lang}/products?category=thermos`}>
-                {dict.categories.thermos}
+              <Link href={`/${lang}/products?category=brooms`}>
+                {dict.categories.brooms}
               </Link>
-              <Link href={`/${lang}/products?category=cutlery`}>
-                {dict.categories.cutlery}
+              <Link href={`/${lang}/products?category=brushes`}>
+                {dict.categories.brushes}
               </Link>
-              <Link href={`/${lang}/products?category=dishes`}>
-                {dict.categories.dishes}
+              <Link href={`/${lang}/products?category=mops`}>
+                {dict.categories.mops}
+              </Link>
+              <Link href={`/${lang}/products?category=bathroom`}>
+                {dict.categories.bathroom}
               </Link>
             </FooterCol>
             <FooterCol title={dict.footer.company}>

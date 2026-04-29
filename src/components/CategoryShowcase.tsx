@@ -22,23 +22,23 @@ export function CategoryShowcase({
 }) {
   const tiles: Tile[] = [
     {
-      slug: "cleaning",
-      label: dict.categories.thermos,
-      caption: dict.categories.thermos_caption,
+      slug: "brooms",
+      label: dict.categories.brooms,
+      caption: dict.categories.brooms_caption,
       gradient: "product-tile-gradient-2",
       image: `${MEDIA}/decorative-broom-head-red-yellow.png`,
     },
     {
-      slug: "cleaning",
-      label: dict.categories.cutlery,
-      caption: dict.categories.cutlery_caption,
+      slug: "brushes",
+      label: dict.categories.brushes,
+      caption: dict.categories.brushes_caption,
       gradient: "product-tile-gradient-1",
       image: `${MEDIA}/scrub-brush-head-multicolor.png`,
     },
     {
-      slug: "cleaning",
-      label: dict.categories.dishes,
-      caption: dict.categories.dishes_caption,
+      slug: "mops",
+      label: dict.categories.mops,
+      caption: dict.categories.mops_caption,
       gradient: "product-tile-gradient-3",
       image: `${MEDIA}/super-mop-l16.png`,
     },
