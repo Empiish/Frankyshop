@@ -1,13 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+
+const MEDIA = "https://media.78.46.200.161.sslip.io/frankyshop/products";
 
 type Tile = {
   slug: string;
   label: string;
   caption: string;
   gradient: string;
+  image: string;
 };
 
 export function CategoryShowcase({
@@ -19,22 +23,25 @@ export function CategoryShowcase({
 }) {
   const tiles: Tile[] = [
     {
-      slug: "thermos",
+      slug: "cleaning",
       label: dict.categories.thermos,
       caption: dict.categories.thermos_caption,
       gradient: "product-tile-gradient-2",
+      image: `${MEDIA}/decorative-broom-head-red-yellow.png`,
     },
     {
-      slug: "cutlery",
+      slug: "cleaning",
       label: dict.categories.cutlery,
       caption: dict.categories.cutlery_caption,
       gradient: "product-tile-gradient-1",
+      image: `${MEDIA}/scrub-brush-head-multicolor.png`,
     },
     {
-      slug: "dishes",
+      slug: "cleaning",
       label: dict.categories.dishes,
       caption: dict.categories.dishes_caption,
       gradient: "product-tile-gradient-3",
+      image: `${MEDIA}/super-mop-l16.png`,
     },
   ];
 
@@ -86,14 +93,28 @@ function Tile({
         tall ? "min-h-[420px]" : "min-h-[260px]"
       } ${className}`}
     >
-      <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+      {/* Product image */}
+      <div className="absolute inset-0 flex items-center justify-end transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+        <Image
+          src={tile.image}
+          alt={tile.label}
+          width={tall ? 260 : 200}
+          height={tall ? 320 : 200}
+          className={`object-contain drop-shadow-xl ${
+            tall
+              ? "mr-6 max-h-[70%] w-auto"
+              : "mr-6 max-h-[75%] w-auto"
+          }`}
+        />
+      </div>
+      {/* Text */}
       <div className="relative z-10 flex w-full flex-col justify-end p-7 lg:p-9">
         <p className="eyebrow text-foreground/60">{tile.caption}</p>
         <div className="mt-2 flex items-end justify-between gap-4">
           <h3 className="font-display text-3xl leading-tight sm:text-4xl">
             {tile.label}
           </h3>
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-foreground text-background transition-colors group-hover:bg-accent">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-colors group-hover:bg-accent">
             <ArrowUpRight className="h-4 w-4" />
           </span>
         </div>
