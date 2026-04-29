@@ -45,7 +45,7 @@ export function CategoryShowcase({
   ];
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
+    <section className="mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-32">
       <div className="mb-12 flex items-end justify-between gap-6">
         <div>
           <p className="eyebrow">{dict.sections.shop_by_category_eyebrow}</p>
@@ -88,8 +88,8 @@ function Tile({
   return (
     <Link
       href={`/${lang}/products?category=${tile.slug}`}
-      className={`group relative flex overflow-hidden rounded-[2rem] ${tile.gradient} ${
-        tall ? "min-h-[420px]" : "min-h-[260px]"
+      className={`group relative flex overflow-hidden rounded-2xl sm:rounded-[2rem] ${tile.gradient} ${
+        tall ? "min-h-[300px] sm:min-h-[420px]" : "min-h-[200px] sm:min-h-[260px]"
       } ${className}`}
     >
       {/* Product image */}

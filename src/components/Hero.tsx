@@ -6,16 +6,16 @@ import type { Dictionary } from "@/i18n/dictionaries";
 export function Hero({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   return (
     <section className="warm-gradient relative overflow-hidden">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 py-20 sm:py-28 lg:grid-cols-12 lg:gap-12 lg:px-10 lg:py-32">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 py-12 sm:py-20 lg:grid-cols-12 lg:gap-12 lg:px-10 lg:py-32">
         <div className="lg:col-span-7">
           <p className="eyebrow">{dict.hero.kicker}</p>
-          <h1 className="font-display mt-5 text-5xl leading-[1.05] sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
+          <h1 className="font-display mt-5 text-4xl leading-[1.05] sm:text-5xl lg:text-7xl xl:text-[5.5rem]">
             {dict.hero.title_a}{" "}
             <span className="font-display italic text-accent">
               {dict.hero.title_b}
             </span>
           </h1>
-          <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:mt-7 sm:text-xl">
             {dict.hero.subtitle}
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">

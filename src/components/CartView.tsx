@@ -49,13 +49,13 @@ export function CartView({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
+    <section className="mx-auto max-w-7xl px-6 pb-32 pt-10 lg:px-10 lg:pb-20 lg:pt-20">
       <p className="eyebrow">{dict.cart.eyebrow}</p>
-      <h1 className="font-display mt-3 text-4xl tracking-tight sm:text-5xl">
+      <h1 className="font-display mt-3 text-3xl tracking-tight sm:text-5xl">
         {dict.cart.title}
       </h1>
 
-      <div className="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-16">
         <ul className="divide-y divide-border lg:col-span-8">
           {items.map((it) => (
             <li
@@ -116,7 +116,7 @@ export function CartView({ lang, dict }: { lang: Locale; dict: Dictionary }) {
         </ul>
 
         <aside className="lg:col-span-4">
-          <div className="rounded-2xl border border-border bg-surface-muted p-7">
+          <div className="rounded-2xl border border-border bg-surface-muted p-6 lg:p-7">
             <p className="eyebrow">{dict.cart.summary}</p>
             <div className="mt-5 flex items-baseline justify-between text-sm">
               <span className="text-muted-foreground">{dict.cart.subtotal}</span>
@@ -144,6 +144,25 @@ export function CartView({ lang, dict }: { lang: Locale; dict: Dictionary }) {
             </Link>
           </div>
         </aside>
+      </div>
+
+      {/* Sticky checkout bar — mobile only */}
+      <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-border bg-background/95 px-6 py-4 backdrop-blur lg:hidden">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-xs text-muted-foreground">{dict.cart.total}</p>
+            <p className="font-display text-xl tabular-nums">
+              {dict.common.currency} {formatTSh(subtotal)}
+            </p>
+          </div>
+          <Link
+            href={`/${lang}/checkout`}
+            className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-foreground text-sm font-medium text-background transition-colors hover:bg-accent"
+          >
+            {dict.cart.checkout_cta}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
     </section>
   );
