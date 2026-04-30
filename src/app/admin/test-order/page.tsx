@@ -14,7 +14,7 @@ export default function TestOrderPage() {
   const [phone, setPhone] = useState("+255700000000");
   const [name, setName] = useState("Test Customer");
   const [zoneId, setZoneId] = useState("347bc895-b64a-4d9c-b995-1fb33628612d");
-  const [result, setResult] = useState<{ ok: boolean; code?: string; error?: string } | null>(null);
+  const [result, setResult] = useState<{ ok: boolean; code?: string; error?: string; emailError?: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function runTest() {
@@ -33,7 +33,7 @@ export default function TestOrderPage() {
       testMode: true,
     });
     setLoading(false);
-    setResult(res.ok ? { ok: true, code: res.orderCode } : { ok: false, error: res.error });
+    setResult(res.ok ? { ok: true, code: res.orderCode, emailError: res.emailError } : { ok: false, error: res.error });
   }
 
   return (
@@ -99,6 +99,9 @@ export default function TestOrderPage() {
                 <p className="mt-1 text-sm text-green-700">Status set to <strong>paid</strong>. Check your inbox for the receipt email.{" "}
                   <a href={`/en/checkout/confirmation?code=${result.code}`} className="underline">View confirmation page →</a>
                 </p>
+                {result.emailError && (
+                  <p className="mt-2 text-xs font-mono text-red-700 bg-red-50 rounded p-2">Email error: {result.emailError}</p>
+                )}
               </>
             ) : (
               <p className="font-medium text-danger">{result.error}</p>

@@ -29,7 +29,7 @@ const placeOrderSchema = z.object({
 export type PlaceOrderInput = z.input<typeof placeOrderSchema>;
 
 export type PlaceOrderResult =
-  | { ok: true; orderCode: string }
+  | { ok: true; orderCode: string; emailError?: string }
   | { ok: false; error: string };
 
 function generateOrderCode(): string {
@@ -86,25 +86,28 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       select name_en from delivery_zones where id = ${v.deliveryZoneId} limit 1
     `;
 
-    // Send confirmation email (non-blocking — don't fail the order if email fails)
+    // Send confirmation email
+    let emailError: string | undefined;
     if (v.customerEmail) {
-      sendOrderConfirmation({
-        orderCode,
-        customerName: v.customerName,
-        customerEmail: v.customerEmail,
-        customerPhone: v.customerPhone,
-        deliveryAddress: v.deliveryAddress,
-        deliveryZoneName: zoneRow?.name_en ?? "Dar es Salaam",
-        deliveryFeeTsh: zone.fee_tsh,
-        subtotalTsh: subtotal,
-        totalTsh: total,
-        items: v.items,
-        createdAt: new Date(),
-        isTest: v.testMode,
-      }).catch((err) => {
-        console.error("[email] confirmation failed", JSON.stringify(err));
-        console.error("[email] error detail", err?.message, err?.statusCode, JSON.stringify(err?.response));
-      });
+      try {
+        await sendOrderConfirmation({
+          orderCode,
+          customerName: v.customerName,
+          customerEmail: v.customerEmail,
+          customerPhone: v.customerPhone,
+          deliveryAddress: v.deliveryAddress,
+          deliveryZoneName: zoneRow?.name_en ?? "Dar es Salaam",
+          deliveryFeeTsh: zone.fee_tsh,
+          subtotalTsh: subtotal,
+          totalTsh: total,
+          items: v.items,
+          createdAt: new Date(),
+          isTest: v.testMode,
+        });
+      } catch (err: any) {
+        emailError = err?.message ?? JSON.stringify(err);
+        console.error("[email] confirmation failed", emailError);
+      }
     }
 
     // Kick off payment — skip for test orders
@@ -123,7 +126,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
         });
     }
 
-    return { ok: true, orderCode };
+    return { ok: true, orderCode, emailError };
   } catch (err) {
     console.error("placeOrder failed", err);
     return { ok: false, error: "Could not place order. Please try again." };
